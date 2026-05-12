@@ -1,486 +1,500 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>털뭉치클럽 - 한 그루 한 벌</title>
-    <!-- Tailwind CSS for rapid styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'warm-bg': '#FAF5EE',     /* 따뜻한 종이 배경 */
-                        'knit-orange': '#DE7456', /* 털실 오렌지 */
-                        'knit-green': '#6E9063',  /* 나무 초록 */
-                        'knit-yellow': '#F5B85A', /* 따뜻한 노랑 */
-                        'knit-brown': '#4A3E3D',  /* 텍스트 갈색 */
-                        'knit-light': '#FDFBF7'   /* 카드 배경 */
-                    },
-                    fontFamily: {
-                        'title': ['Jua', 'sans-serif'],
-                        'body': ['Gowun Dodum', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-
-    <style>
-        /* Base Settings */
-        body {
-            background-color: #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 1rem 0; /* 모바일에서 상하 여백 축소 */
-            margin: 0;
-            font-family: 'Gowun Dodum', sans-serif;
-            color: #4A3E3D;
-        }
-
-        /* 포스터 컨테이너 */
-        .poster {
-            background-color: #FAF5EE;
-            width: 100%;
-            max-width: 210mm;
-            min-height: 297mm;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            background-image: radial-gradient(#DE7456 0.5px, transparent 0.5px);
-            background-size: 15px 15px;
-        }
-
-        /* 컨텐츠 래퍼 */
-        .content-wrapper {
-            background: rgba(250, 245, 238, 0.95);
-            margin: 10px; /* 모바일에서 좌우 여백 축소 */
-            border-radius: 20px;
-            border: 2px dashed #DE7456;
-            flex-grow: 1;
-            padding: 1.5rem 1rem; /* 모바일에서 내부 패딩 축소 */
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        @media (min-width: 640px) {
-            body { padding: 2rem 0; }
-            .content-wrapper { padding: 1.5rem 2rem; margin: 12px; }
-        }
-
-        /* 로드맵 애니메이션 */
-        .roadmap-path {
-            stroke-dasharray: 12;
-            animation: dash 30s linear infinite;
-        }
-
-        .roadmap-pin {
-            transition: transform 0.3s ease;
-        }
-        .roadmap-pin:hover {
-            transform: scale(1.1) translateY(-5px);
-        }
-
-        /* 핀 내부 텍스트 박스(말풍선) 고정 스타일 */
-        .roadmap-tooltip {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-        }
-
-        @keyframes dash {
-            to { stroke-dashoffset: -1000; }
-        }
-
-        /* 인쇄 최적화 */
-        @media print {
-            @page { size: A4 portrait; margin: 0; }
-            body { background-color: transparent; padding: 0; }
-            .poster {
-                box-shadow: none; max-width: none; width: 210mm; min-height: 297mm;
-                background-color: #FAF5EE !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
-            }
-            .no-print { display: none !important; }
-        }
-    </style>
-</head>
-<body>
-
-    <!-- 포스터 메인 영역 -->
-    <div class="poster">
-        <div class="content-wrapper shadow-sm">
-
-            <!-- 상단 데코 (털실과 나무) -->
-            <div class="absolute top-4 left-4 sm:left-6 w-12 h-12 sm:w-16 sm:h-16 opacity-80 pointer-events-none">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="35" fill="#6E9063" opacity="0.2"/>
-                    <path d="M45 100 L45 50 L55 50 L55 100 Z" fill="#8B5A2B"/>
-                    <circle cx="50" cy="35" r="30" fill="#6E9063"/>
-                    <circle cx="30" cy="50" r="25" fill="#80A175"/>
-                    <circle cx="70" cy="50" r="25" fill="#80A175"/>
-                </svg>
-            </div>
-            <div class="absolute top-4 right-4 sm:right-6 w-12 h-12 sm:w-16 sm:h-16 opacity-80 pointer-events-none">
-                <svg viewBox="0 0 100 100">
-                    <circle cx="50" cy="50" r="35" fill="#F5B85A" opacity="0.3"/>
-                    <circle cx="50" cy="55" r="30" fill="#DE7456"/>
-                    <path d="M25 45 Q 50 30 75 45 M30 55 Q 50 40 70 55 M25 65 Q 50 50 75 65" stroke="#FFF" stroke-width="3" fill="none" opacity="0.5"/>
-                    <line x1="20" y1="90" x2="80" y2="20" stroke="#8B5A2B" stroke-width="4" stroke-linecap="round"/>
-                    <circle cx="20" cy="90" r="4" fill="#8B5A2B"/>
-                    <line x1="80" y1="90" x2="20" y2="20" stroke="#8B5A2B" stroke-width="4" stroke-linecap="round"/>
-                    <circle cx="80" cy="90" r="4" fill="#8B5A2B"/>
-                </svg>
-            </div>
-
-            <!-- 헤더 영역 -->
-            <header class="text-center mt-6 sm:mt-4 mb-4">
-                <div class="inline-block bg-knit-green text-white font-title px-4 py-1 rounded-full text-sm sm:text-lg mb-2 shadow-sm">
-                    🧶 청년 프로젝트 털뭉치클럽 😺
-                </div>
-                <h1 class="font-title text-4xl sm:text-6xl text-knit-orange mb-2 drop-shadow-sm">한 그루🌲 한 벌🧥</h1>
-                <h2 class="font-title text-xl sm:text-3xl text-knit-brown">함께 뜨는 나무옷 만들기</h2>
-            </header>
-
-            <!-- 소개글 박스 -->
-            <div class="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-4 mb-5 text-center border-2 border-knit-yellow shadow-md relative">
-                <p class="text-sm sm:text-lg leading-relaxed font-semibold">
-                    작은 모티브를 하나씩 떠서 모으고, 이어 붙여 <span class="text-knit-green font-bold">나무옷</span>을 만듭니다.<br>
-                    뜨개를 처음 접하는 분들도, 일회성 참여자도 모두 환영해요!<br>
-                    우리의 손길로 지역 사회에 따뜻한 변화를 만들어보아요.
-                </p>
-            </div>
-
-            <!-- 3단계 프로세스 -->
-            <div class="mb-6">
-                <h3 class="font-title text-lg sm:text-2xl text-center mb-3 text-knit-brown">✨ 우리는 이렇게 작업해요</h3>
-                <!-- flex-col (모바일) -> sm:flex-row (PC) 로 반응형 레이아웃 변경 -->
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-2">
-
-                    <!-- 1. 모티브 뜨기 -->
-                    <div class="bg-knit-light rounded-2xl p-3 w-full sm:w-1/3 flex flex-row sm:flex-col items-center justify-start sm:justify-center border border-gray-200 shadow-sm">
-                        <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mb-2 flex-shrink-0">
-                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                                <rect x="15" y="15" width="70" height="70" rx="10" fill="#DE7456"/>
-                                <rect x="25" y="25" width="20" height="20" rx="4" fill="#F5B85A"/>
-                                <rect x="55" y="55" width="20" height="20" rx="4" fill="#F5B85A"/>
-                                <rect x="25" y="55" width="20" height="20" rx="4" fill="#fff" opacity="0.8"/>
-                                <rect x="55" y="25" width="20" height="20" rx="4" fill="#fff" opacity="0.8"/>
-                                <line x1="5" y1="50" x2="95" y2="50" stroke="#8B5A2B" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
-                            </svg>
-                        </div>
-                        <div class="ml-4 sm:ml-0 flex flex-col items-start sm:items-center">
-                            <h4 class="font-title text-base sm:text-lg text-knit-orange text-center">1. 각자 모티브 뜨기</h4>
-                            <p class="text-[11px] sm:text-xs text-left sm:text-center text-gray-600 mt-1 leading-snug">기초부터 알려드려요! 초보자 대환영</p>
-                        </div>
-                    </div>
-
-                    <!-- 화살표 (모바일에서는 아래를 향하게) -->
-                    <div class="text-knit-green text-xl sm:text-3xl font-bold rotate-90 sm:rotate-0 py-1 sm:py-0">➔</div>
-
-                    <!-- 2. 모티브 잇기 -->
-                    <div class="bg-knit-light rounded-2xl p-3 w-full sm:w-1/3 flex flex-row sm:flex-col items-center justify-start sm:justify-center border border-gray-200 shadow-sm">
-                        <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mb-2 flex-shrink-0">
-                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                                <rect x="10" y="20" width="35" height="60" rx="5" fill="#F5B85A"/>
-                                <rect x="55" y="20" width="35" height="60" rx="5" fill="#6E9063"/>
-                                <path d="M 45 25 L 55 35 M 45 45 L 55 55 M 45 65 L 55 75" stroke="#DE7456" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                                <line x1="70" y1="80" x2="30" y2="10" stroke="#aaa" stroke-width="3" stroke-linecap="round"/>
-                                <circle cx="30" cy="10" r="2" fill="#aaa"/>
-                            </svg>
-                        </div>
-                        <div class="ml-4 sm:ml-0 flex flex-col items-start sm:items-center">
-                            <h4 class="font-title text-base sm:text-lg text-knit-orange text-center">2. 모티브 잇기</h4>
-                            <p class="text-[11px] sm:text-xs text-left sm:text-center text-gray-600 mt-1 leading-snug">함께 모여 조각들을<br class="hidden sm:block"> 하나로 연결해요</p>
-                        </div>
-                    </div>
-
-                    <!-- 화살표 -->
-                    <div class="text-knit-green text-xl sm:text-3xl font-bold rotate-90 sm:rotate-0 py-1 sm:py-0">➔</div>
-
-                    <!-- 3. 나무 옷 입히기 -->
-                    <div class="bg-knit-light rounded-2xl p-3 w-full sm:w-1/3 flex flex-row sm:flex-col items-center justify-start sm:justify-center border border-gray-200 shadow-sm">
-                        <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mb-2 flex-shrink-0">
-                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                                <path d="M40 100 L45 10 Q50 0 60 10 L65 100 Z" fill="#8B5A2B"/>
-                                <circle cx="50" cy="20" r="25" fill="#6E9063"/>
-                                <rect x="42" y="45" width="20" height="40" rx="3" fill="#DE7456"/>
-                                <rect x="42" y="55" width="20" height="10" fill="#F5B85A"/>
-                                <rect x="42" y="75" width="20" height="10" fill="#F5B85A"/>
-                                <path d="M42 45 Q 52 50 62 45" stroke="#fff" stroke-width="2" fill="none"/>
-                            </svg>
-                        </div>
-                        <div class="ml-4 sm:ml-0 flex flex-col items-start sm:items-center">
-                            <h4 class="font-title text-base sm:text-lg text-knit-orange text-center">3. 나무옷 입히기</h4>
-                            <p class="text-[11px] sm:text-xs text-left sm:text-center text-gray-600 mt-1 leading-snug">완성된 옷을 겨울 나무에<br class="hidden sm:block"> 따뜻하게 입혀줘요</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 로드맵 영역 -->
-            <div class="flex-grow relative mb-6">
-                <h3 class="font-title text-lg sm:text-2xl text-center mb-2 text-knit-brown">🗺️ 우리의 뜨개 여정 (로드맵)</h3>
-                <!-- 높이를 충분히 주어 겹침 방지 -->
-                <div class="relative w-full min-h-[220px] sm:min-h-[200px] bg-[#F4EFDF] rounded-2xl sm:rounded-3xl border-2 border-white shadow-inner overflow-visible sm:overflow-hidden">
-
-                    <!-- 구불구불한 선 -->
-                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 250" preserveAspectRatio="none">
-                        <path class="roadmap-path" d="M 50,40 C 200,10 300,110 400,110 C 500,110 600,10 750,50 C 850,80 800,200 650,200 C 450,200 350,130 200,180 C 100,210 50,150 50,150" fill="none" stroke="#DE7456" stroke-width="6" stroke-linecap="round"/>
-                    </svg>
-
-                    <!-- 각 단계별 핀 (텍스트 박스 위치를 위/아래로 번갈아 배치하여 겹침 방지) -->
-                    <!-- 1. 오리엔테이션 (아래로) -->
-                    <div class="roadmap-pin absolute" style="top: 15%; left: 8%;">
-                        <div class="bg-knit-orange text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">1</div>
-                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-orange-100 z-30">오리엔테이션</div>
-                    </div>
-                    <!-- 2. 1차 정기모임 (위로) -->
-                    <div class="roadmap-pin absolute" style="top: 25%; left: 28%;">
-                        <div class="roadmap-tooltip bottom-full mb-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-green-100 z-30">1차 정기모임</div>
-                        <div class="bg-knit-green text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">2</div>
-                    </div>
-                    <!-- 3. 비정기모임 (아래로) -->
-                    <div class="roadmap-pin absolute" style="top: 35%; left: 48%;">
-                        <div class="bg-knit-yellow text-knit-brown rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">3</div>
-                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-yellow-100 z-30">비정기모임(함뜨)</div>
-                    </div>
-                    <!-- 4. (...) (위로) -->
-                    <div class="roadmap-pin absolute" style="top: 20%; left: 70%;">
-                        <div class="roadmap-tooltip bottom-full mb-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-gray-100 z-30">추가 모임 및 모티브 수집(반복)</div>
-                        <div class="bg-gray-400 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">4</div>
-                    </div>
-                    <!-- 5. 모티브 잇기 (아래로) -->
-                    <div class="roadmap-pin absolute" style="top: 60%; left: 82%;">
-                        <div class="bg-knit-orange text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">5</div>
-                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-orange-100 z-30">모티브 잇기/나무옷 만들기</div>
-                    </div>
-                    <!-- 6. 나무옷 입히기 (위로) -->
-                    <div class="roadmap-pin absolute" style="top: 75%; left: 55%;">
-                        <div class="roadmap-tooltip bottom-full mb-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-green-100 z-30">나무옷 입히기</div>
-                        <div class="bg-knit-green text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">6</div>
-                    </div>
-                    <!-- 7. 마무리 (아래로) -->
-                    <div class="roadmap-pin absolute" style="top: 65%; left: 30%;">
-                        <div class="bg-knit-yellow text-knit-brown rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">7</div>
-                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-yellow-100 z-30">프로젝트 마무리</div>
-                    </div>
-
-                    <!-- 장식용 고양이 -->
-                    <div class="absolute" style="top: 55%; left: 5%; width: 40px; height: 40px; z-10 pointer-events-none">
-                        <svg viewBox="0 0 100 100">
-                            <path d="M 20 80 Q 20 50 50 50 Q 80 50 80 80 Z" fill="#4A3E3D"/>
-                            <path d="M 30 55 L 25 40 L 40 50 Z" fill="#4A3E3D"/>
-                            <path d="M 70 55 L 75 40 L 60 50 Z" fill="#4A3E3D"/>
-                            <path d="M 80 80 Q 95 80 90 60" stroke="#4A3E3D" stroke-width="6" fill="none" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 상세 참여 안내 (새로 추가된 영역) -->
-            <div class="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full">
-
-                <!-- 1. 모티브 뜨개 가이드 (가로 전체 차지, 사진 2장) -->
-                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border-2 border-knit-yellow shadow-sm sm:col-span-2 flex flex-col sm:flex-row gap-3 sm:gap-5">
-                    <!-- 설명 및 버튼 (PC에서 좌측) -->
-                    <div class="flex-1 flex flex-col justify-between order-2 sm:order-1">
-                        <div>
-                            <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">🪡 모티브?</h4>
-                            <ul class="text-xs sm:text-sm space-y-1.5 mb-3">
-                                <li>작은 조각(모티브)을 여러 개 떠서 연결하여 블랭킷, 가방, 옷 등 큰 작품을 만드는 코바늘 뜨개질 기법입니다.</li>
-                                <li><span class="font-bold text-knit-brown">기본 권장 규격:</span> <span class="text-gray-400 border-b border-gray-300 px-1">10cm X 10cm</span></li>
-                            </ul>
-                        </div>
-                        <a href="https://www.youtube.com/watch?v=5dZOTuhfRPw" target="_blank" class="inline-flex items-center justify-center gap-1.5 w-full bg-[#DE7456] hover:bg-[#c46146] text-white text-[11px] sm:text-xs font-bold py-2 rounded-xl transition shadow-sm mt-auto">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                            초보자용 모티브 뜨기 (영상)
-                        </a>
-                    </div>
-                    <!-- 사진 영역 (사진 4장 나란히, PC에서 우측) -->
-                    <div class="flex-1 grid grid-cols-4 gap-1.5 sm:gap-2 h-28 sm:h-auto min-h-[110px] order-1 sm:order-2">
-                        <!-- 첫 번째 사진 -->
-                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://mblogthumb-phinf.pstatic.net/MjAyNjAxMjFfMTEy/MDAxNzY4OTU1NDMyMTMy.ab9CL31XmBmCCsUxWMLjJnsI3qD5QH4hM3d4olKv5DYg.K26AxhubbTj0lojW9uEqkKE171yBV5zega5lKb0UmzEg.JPEG/%EC%BD%94%EB%B0%94%EB%8A%98%EB%9C%A8%EA%B8%B0%EB%8F%84%EC%95%88.jpg?type=w800')">
-                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyNjAxMjFfMTEy/MDAxNzY4OTU1NDMyMTMy.ab9CL31XmBmCCsUxWMLjJnsI3qD5QH4hM3d4olKv5DYg.K26AxhubbTj0lojW9uEqkKE171yBV5zega5lKb0UmzEg.JPEG/%EC%BD%94%EB%B0%94%EB%8A%98%EB%9C%A8%EA%B8%B0%EB%8F%84%EC%95%88.jpg?type=w800" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                            </div>
-                        </div>
-                        <!-- 두 번째 사진 -->
-                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://mblogthumb-phinf.pstatic.net/MjAxODA3MTZfMjA3/MDAxNTMxNzUyOTE4OTIw.D39vAFf0HMgX5qzro-JlntUVK0c7KTYsd4AKjNpY-3Ig.sMuSSMK8fLlKh__8Sw2QdmXfDUhFIUljZqJLmqqOyD0g.JPEG.ppeudamade/c6dfc18434e3546d1bbcc7a5ce7a7768.jpg?type=w800')">
-                            <img src="https://mblogthumb-phinf.pstatic.net/MjAxODA3MTZfMjA3/MDAxNTMxNzUyOTE4OTIw.D39vAFf0HMgX5qzro-JlntUVK0c7KTYsd4AKjNpY-3Ig.sMuSSMK8fLlKh__8Sw2QdmXfDUhFIUljZqJLmqqOyD0g.JPEG.ppeudamade/c6dfc18434e3546d1bbcc7a5ce7a7768.jpg?type=w800" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                            </div>
-                        </div>
-                        <!-- 세 번째 사진 -->
-                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://i.pinimg.com/236x/8f/79/8d/8f798dd893217353948c671d6c955eaf.jpg')">
-                            <img src="https://i.pinimg.com/236x/8f/79/8d/8f798dd893217353948c671d6c955eaf.jpg" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                            </div>
-                        </div>
-                        <!-- 네 번째 사진 -->
-                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://i.pinimg.com/564x/d0/69/e3/d069e3b01782ca29ad3aa6d1c4e4942f.jpg')">
-                            <img src="https://i.pinimg.com/564x/d0/69/e3/d069e3b01782ca29ad3aa6d1c4e4942f.jpg" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
-                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
-                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 2. 준비물 및 수령 (가로 전체 차지, 내용 가로 배치로 높이 최소화) -->
-                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm sm:col-span-2">
-                    <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">🎁 제공 물품(재료) 및 수령처</h4>
-                    <div class="flex flex-col sm:flex-row sm:items-center sm:divide-x sm:divide-gray-200 gap-2 sm:gap-0">
-                        <div class="sm:w-1/2 sm:pr-4">
-                            <span class="font-bold text-knit-brown text-xs sm:text-sm block mb-0.5">제공 물품:</span>
-                            <span class="text-xs sm:text-sm text-gray-700">코바늘, 뜨개실, 돗바늘, 단수링</span>
-                        </div>
-                        <div class="sm:w-1/2 sm:pl-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
-                            <span class="font-bold text-knit-brown text-xs sm:text-sm block mb-0.5">수령 방법:</span>
-                            <span class="text-xs sm:text-sm text-gray-700">뜨개모임 장소 또는 <span class="text-[11px] sm:text-[12px] font-semibold text-gray-600 bg-gray-50 px-1 rounded inline-block border border-gray-100 mt-0.5 sm:mt-0">고리울청소년센터 '꾸마' 방문</span></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- 3. 완성작 제출 (기존 유지, 하단 좌측) -->
-                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm">
-                    <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">📮 제작물 제출방법</h4>
-                    <ul class="text-xs sm:text-sm space-y-2">
-                        <li><span class="font-bold text-knit-brown">대면 제출:</span> 뜨개모임 장소 또는<br> 고리울청소년센터 '꾸마' 방문</li>
-                        <li class="pt-1.5 border-t border-gray-100"><span class="font-bold text-knit-brown">비대면 제출:</span> 택배 발송<br>
-                        <span class="text-[10px] sm:text-[11px] text-gray-500 bg-gray-50 p-1.5 rounded block mt-1 border border-gray-100 leading-tight">📍 경기 부천시 오정구 고강로132번길 28,<br>고리울청소년센터 꾸마</span></li>
-                    </ul>
-                </div>
-
-                <!-- 4. 문의 (기존 유지, 하단 우측) -->
-                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm">
-                    <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">💬 Contact</h4>
-                    <p class="text-xs sm:text-sm text-gray-700 leading-relaxed">
-                        궁금한 점이 있으신가요?<br><br>
-                        <span class="font-bold text-knit-orange">카카오톡 '털뭉치클럽 한그루한벌'</span> 단톡방에서 <span class="bg-yellow-100 text-yellow-800 px-1 rounded font-bold">운영진</span>을 태그하여 편하게 질문해 주세요!
-                    </p>
-                </div>
-            </div>
-
-            <!-- 하단 안내 정보 영역 -->
-            <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm mb-2">
-                <div class="grid grid-cols-2 gap-2 sm:gap-3 text-sm">
-                    <div>
-                        <p class="font-title text-knit-green text-base sm:text-lg">🗓️ 진행 일정</p>
-                        <p class="mt-1 font-bold text-xs sm:text-sm">2026년 5월 ~ 12월 초</p>
-                        <p class="text-[10px] sm:text-xs text-gray-500 mt-0.5">(일정 조율 후 모임 진행)</p>
-                    </div>
-                    <div>
-                        <p class="font-title text-knit-green text-base sm:text-lg">📍 모임 장소</p>
-                        <p class="mt-1 font-bold text-xs sm:text-sm">고리울청소년센터 꾸마 OR 오정청년공간</p>
-                    </div>
-                    <div class="col-span-2 mt-1 pt-2 border-t border-gray-100">
-                        <p class="font-title text-knit-green text-base sm:text-lg">🙋 모집 대상</p>
-                        <p class="mt-1 font-semibold text-xs sm:text-sm">뜨개와 손작업에 관심 있는 성인 및 청년 누구나!</p>
-                        <p class="text-[10px] sm:text-xs font-bold text-knit-orange mt-1">※ 정식 소모임 가입 없이 모티브 기부(일회성 참여)도 대환영합니다!</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 최하단 푸터 영역 -->
-            <footer class="mt-auto pt-2 pb-2 relative flex items-center justify-center w-full">
-                <p class="text-[11px] sm:text-sm font-bold text-knit-brown flex items-center justify-center gap-1 sm:gap-2">
-                    🧶 함께 뜨는 즐거움,
-                    <span class="font-title text-base sm:text-xl text-knit-orange">털뭉치클럽</span> 과 함께해요! 🌲
-                </p>
-                <button onclick="sharePoster()" class="absolute right-0 bg-knit-yellow text-knit-brown p-1.5 sm:px-3 sm:py-1.5 rounded-full shadow hover:bg-yellow-400 transition flex items-center gap-1 text-[10px] sm:text-xs font-bold" title="공유하기">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5 sm:w-4 sm:h-4">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
-                    </svg>
-                    <span class="hidden sm:inline">공유</span>
-                </button>
-            </footer>
-
-        </div>
-    </div>
-
-    <!-- 링크 복사 알림 토스트 -->
-    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-knit-brown text-white px-5 py-2 rounded-full opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-sm font-bold shadow-lg">
-        웹페이지 주소가 복사되었습니다! 🧶
-    </div>
-
-    <!-- 이미지 확대 보기 모달 -->
-    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black bg-opacity-80 flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="closeImageModal()">
-        <button class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white hover:text-gray-300 p-2 focus:outline-none" onclick="closeImageModal()">
-            <svg class="w-8 h-8 sm:w-10 sm:h-10 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-        <img id="modalImg" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transform scale-95 transition-transform duration-300" alt="원본 이미지" onclick="event.stopPropagation()"> <!-- 이미지 클릭시 닫히지 않도록 stopPropagation 추가 -->
-    </div>
-
-    <script>
-        function showToast() {
-            const toast = document.getElementById('toast');
-            toast.classList.remove('opacity-0');
-            setTimeout(() => {
-                toast.classList.add('opacity-0');
-            }, 2000);
-        }
-
-        function sharePoster() {
-            if (navigator.share) {
-                navigator.share({
-                    title: '털뭉치클럽 - 한 그루 한 벌',
-                    text: '함께 뜨는 나무옷 만들기 프로젝트에 함께해요!',
-                    url: window.location.href,
-                }).catch((error) => console.log('공유 취소됨', error));
-            } else {
-                const dummy = document.createElement('input');
-                document.body.appendChild(dummy);
-                dummy.value = window.location.href;
-                dummy.select();
-                document.execCommand('copy');
-                document.body.removeChild(dummy);
-                showToast();
-            }
-        }
-
-        // 모달 열기 함수
-        function openImageModal(src) {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImg');
-            modalImg.src = src;
-
-            modal.classList.remove('hidden');
-            // 부드러운 애니메이션 효과를 위해 약간의 지연 후 클래스 조작
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-                modalImg.classList.remove('scale-95');
-                modalImg.classList.add('scale-100');
-            }, 10);
-        }
-
-        // 모달 닫기 함수
-        function closeImageModal() {
-            const modal = document.getElementById('imageModal');
-            const modalImg = document.getElementById('modalImg');
-
-            modal.classList.add('opacity-0');
-            modalImg.classList.remove('scale-100');
-            modalImg.classList.add('scale-95');
-
-            // 애니메이션이 끝난 후 숨김 처리
-            setTimeout(() => {
-                modal.classList.add('hidden');
-                modalImg.src = ''; // 닫힐 때 이미지 초기화 (깜빡임 방지)
-            }, 300);
-        }
-    </script>
-</body>
-</html>
+     1|```html
+     2|<!DOCTYPE html>
+     3|<html lang="ko">
+     4|<head>
+     5|    <meta charset="UTF-8">
+     6|    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     7|    <title>털뭉치클럽 - 한 그루 한 벌</title>
+     8|    <!-- Tailwind CSS for rapid styling -->
+     9|    <script src="https://cdn.tailwindcss.com"></script>
+    10|    <!-- Google Fonts -->
+    11|    <link rel="preconnect" href="https://fonts.googleapis.com">
+    12|    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    13|    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Jua&display=swap" rel="stylesheet">
+    14|    
+    15|    <script>
+    16|        tailwind.config = {
+    17|            theme: {
+    18|                extend: {
+    19|                    colors: {
+    20|                        'warm-bg': '#FAF5EE',     /* 따뜻한 종이 배경 */
+    21|                        'knit-orange': '#DE7456', /* 털실 오렌지 */
+    22|                        'knit-green': '#6E9063',  /* 나무 초록 */
+    23|                        'knit-yellow': '#F5B85A', /* 따뜻한 노랑 */
+    24|                        'knit-brown': '#4A3E3D',  /* 텍스트 갈색 */
+    25|                        'knit-light': '#FDFBF7'   /* 카드 배경 */
+    26|                    },
+    27|                    fontFamily: {
+    28|                        'title': ['Jua', 'sans-serif'],
+    29|                        'body': ['Gowun Dodum', 'sans-serif']
+    30|                    }
+    31|                }
+    32|            }
+    33|        }
+    34|    </script>
+    35|
+    36|    <style>
+    37|        /* Base Settings */
+    38|        body {
+    39|            background-color: #e2e8f0; 
+    40|            display: flex;
+    41|            flex-direction: column;
+    42|            align-items: center;
+    43|            padding: 1rem 0; /* 모바일에서 상하 여백 축소 */
+    44|            margin: 0;
+    45|            font-family: 'Gowun Dodum', sans-serif;
+    46|            color: #4A3E3D;
+    47|        }
+    48|
+    49|        /* 포스터 컨테이너 */
+    50|        .poster {
+    51|            background-color: #FAF5EE;
+    52|            width: 100%;
+    53|            max-width: 210mm;
+    54|            min-height: 297mm;
+    55|            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    56|            position: relative;
+    57|            display: flex;
+    58|            flex-direction: column;
+    59|            background-image: radial-gradient(#DE7456 0.5px, transparent 0.5px);
+    60|            background-size: 15px 15px;
+    61|        }
+    62|        
+    63|        /* 컨텐츠 래퍼 */
+    64|        .content-wrapper {
+    65|            background: rgba(250, 245, 238, 0.95);
+    66|            margin: 10px; /* 모바일에서 좌우 여백 축소 */
+    67|            border-radius: 20px;
+    68|            border: 2px dashed #DE7456;
+    69|            flex-grow: 1;
+    70|            padding: 1.5rem 1rem; /* 모바일에서 내부 패딩 축소 */
+    71|            display: flex;
+    72|            flex-direction: column;
+    73|            position: relative;
+    74|        }
+    75|
+    76|        @media (min-width: 640px) {
+    77|            body { padding: 2rem 0; }
+    78|            .content-wrapper { padding: 1.5rem 2rem; margin: 12px; }
+    79|        }
+    80|
+    81|        /* 로드맵 애니메이션 */
+    82|        .roadmap-path {
+    83|            stroke-dasharray: 12;
+    84|            animation: dash 30s linear infinite;
+    85|        }
+    86|        
+    87|        .roadmap-pin {
+    88|            transition: transform 0.3s ease;
+    89|        }
+    90|        .roadmap-pin:hover {
+    91|            transform: scale(1.1) translateY(-5px);
+    92|        }
+    93|        
+    94|        /* 핀 내부 텍스트 박스(말풍선) 고정 스타일 */
+    95|        .roadmap-tooltip {
+    96|            position: absolute;
+    97|            left: 50%;
+    98|            transform: translateX(-50%);
+    99|            white-space: nowrap;
+   100|        }
+   101|
+   102|        @keyframes dash {
+   103|            to { stroke-dashoffset: -1000; }
+   104|        }
+   105|
+   106|        /* 인쇄 최적화 */
+   107|        @media print {
+   108|            @page { size: A4 portrait; margin: 0; }
+   109|            body { background-color: transparent; padding: 0; }
+   110|            .poster {
+   111|                box-shadow: none; max-width: none; width: 210mm; min-height: 297mm;
+   112|                background-color: #FAF5EE !important; -webkit-print-color-adjust: exact; print-color-adjust: exact;
+   113|            }
+   114|            .no-print { display: none !important; }
+   115|        }
+   116|    </style>
+   117|</head>
+   118|<body>
+   119|
+   120|    <!-- 포스터 메인 영역 -->
+   121|    <div class="poster">
+   122|        <div class="content-wrapper shadow-sm">
+   123|            
+   124|            <!-- 상단 데코 (털실과 나무) -->
+   125|            <div class="absolute top-4 left-4 sm:left-6 w-12 h-12 sm:w-16 sm:h-16 opacity-80 pointer-events-none">
+   126|                <svg viewBox="0 0 100 100">
+   127|                    <circle cx="50" cy="50" r="35" fill="#6E9063" opacity="0.2"/>
+   128|                    <path d="M45 100 L45 50 L55 50 L55 100 Z" fill="#8B5A2B"/>
+   129|                    <circle cx="50" cy="35" r="30" fill="#6E9063"/>
+   130|                    <circle cx="30" cy="50" r="25" fill="#80A175"/>
+   131|                    <circle cx="70" cy="50" r="25" fill="#80A175"/>
+   132|                </svg>
+   133|            </div>
+   134|            <div class="absolute top-4 right-4 sm:right-6 w-12 h-12 sm:w-16 sm:h-16 opacity-80 pointer-events-none">
+   135|                <svg viewBox="0 0 100 100">
+   136|                    <circle cx="50" cy="50" r="35" fill="#F5B85A" opacity="0.3"/>
+   137|                    <circle cx="50" cy="55" r="30" fill="#DE7456"/>
+   138|                    <path d="M25 45 Q 50 30 75 45 M30 55 Q 50 40 70 55 M25 65 Q 50 50 75 65" stroke="#FFF" stroke-width="3" fill="none" opacity="0.5"/>
+   139|                    <line x1="20" y1="90" x2="80" y2="20" stroke="#8B5A2B" stroke-width="4" stroke-linecap="round"/>
+   140|                    <circle cx="20" cy="90" r="4" fill="#8B5A2B"/>
+   141|                    <line x1="80" y1="90" x2="20" y2="20" stroke="#8B5A2B" stroke-width="4" stroke-linecap="round"/>
+   142|                    <circle cx="80" cy="90" r="4" fill="#8B5A2B"/>
+   143|                </svg>
+   144|            </div>
+   145|
+   146|            <!-- 헤더 영역 -->
+   147|            <header class="text-center mt-6 sm:mt-4 mb-4">
+   148|                <div class="inline-block bg-knit-green text-white font-title px-4 py-1 rounded-full text-sm sm:text-lg mb-2 shadow-sm">
+   149|                    🧶 털뭉치클럽 소모임 프로젝트
+   150|                </div>
+   151|                <h1 class="font-title text-4xl sm:text-6xl text-knit-orange mb-2 drop-shadow-sm">한 그루 한 벌</h1>
+   152|                <h2 class="font-title text-xl sm:text-3xl text-knit-brown">함께 뜨는 나무옷 만들기</h2>
+   153|            </header>
+   154|
+   155|            <!-- 소개글 박스 -->
+   156|            <div class="bg-white rounded-2xl sm:rounded-3xl p-3 sm:p-4 mb-5 text-center border-2 border-knit-yellow shadow-md relative">
+   157|                <p class="text-sm sm:text-lg leading-relaxed font-semibold">
+   158|                    작은 모티브를 하나씩 떠서 모으고, 이어 붙여 <span class="text-knit-green font-bold">나무옷</span>을 만듭니다.<br>
+   159|                    뜨개를 처음 접하는 분들도, 일회성 참여자도 모두 환영해요!<br>
+   160|                    우리의 손길로 지역 사회에 따뜻한 변화를 만들어보아요.
+   161|                </p>
+   162|            </div>
+   163|
+   164|            <!-- 3단계 프로세스 -->
+   165|            <div class="mb-6">
+   166|                <h3 class="font-title text-lg sm:text-2xl text-center mb-3 text-knit-brown">✨ 우리는 이렇게 작업해요</h3>
+   167|                <!-- flex-col (모바일) -> sm:flex-row (PC) 로 반응형 레이아웃 변경 -->
+   168|                <div class="flex flex-col sm:flex-row justify-between items-center gap-2 sm:gap-2">
+   169|                    
+   170|                    <!-- 1. 모티브 뜨기 -->
+   171|                    <div class="bg-knit-light rounded-2xl p-3 w-full sm:w-1/3 flex flex-row sm:flex-col items-center justify-start sm:justify-center border border-gray-200 shadow-sm">
+   172|                        <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mb-2 flex-shrink-0">
+   173|                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+   174|                                <rect x="15" y="15" width="70" height="70" rx="10" fill="#DE7456"/>
+   175|                                <rect x="25" y="25" width="20" height="20" rx="4" fill="#F5B85A"/>
+   176|                                <rect x="55" y="55" width="20" height="20" rx="4" fill="#F5B85A"/>
+   177|                                <rect x="25" y="55" width="20" height="20" rx="4" fill="#fff" opacity="0.8"/>
+   178|                                <rect x="55" y="25" width="20" height="20" rx="4" fill="#fff" opacity="0.8"/>
+   179|                                <line x1="5" y1="50" x2="95" y2="50" stroke="#8B5A2B" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+   180|                            </svg>
+   181|                        </div>
+   182|                        <div class="ml-4 sm:ml-0 flex flex-col items-start sm:items-center">
+   183|                            <h4 class="font-title text-base sm:text-lg text-knit-orange text-center">1. 각자 모티브 뜨기</h4>
+   184|                            <p class="text-[11px] sm:text-xs text-left sm:text-center text-gray-600 mt-1 leading-snug">기초부터 알려드려요! 초보자 대환영</p>
+   185|                        </div>
+   186|                    </div>
+   187|
+   188|                    <!-- 화살표 (모바일에서는 아래를 향하게) -->
+   189|                    <div class="text-knit-green text-xl sm:text-3xl font-bold rotate-90 sm:rotate-0 py-1 sm:py-0">➔</div>
+   190|
+   191|                    <!-- 2. 모티브 잇기 -->
+   192|                    <div class="bg-knit-light rounded-2xl p-3 w-full sm:w-1/3 flex flex-row sm:flex-col items-center justify-start sm:justify-center border border-gray-200 shadow-sm">
+   193|                        <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mb-2 flex-shrink-0">
+   194|                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+   195|                                <rect x="10" y="20" width="35" height="60" rx="5" fill="#F5B85A"/>
+   196|                                <rect x="55" y="20" width="35" height="60" rx="5" fill="#6E9063"/>
+   197|                                <path d="M 45 25 L 55 35 M 45 45 L 55 55 M 45 65 L 55 75" stroke="#DE7456" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+   198|                                <line x1="70" y1="80" x2="30" y2="10" stroke="#aaa" stroke-width="3" stroke-linecap="round"/>
+   199|                                <circle cx="30" cy="10" r="2" fill="#aaa"/>
+   200|                            </svg>
+   201|                        </div>
+   202|                        <div class="ml-4 sm:ml-0 flex flex-col items-start sm:items-center">
+   203|                            <h4 class="font-title text-base sm:text-lg text-knit-orange text-center">2. 모티브 잇기</h4>
+   204|                            <p class="text-[11px] sm:text-xs text-left sm:text-center text-gray-600 mt-1 leading-snug">함께 모여 조각들을<br class="hidden sm:block"> 하나로 연결해요</p>
+   205|                        </div>
+   206|                    </div>
+   207|
+   208|                    <!-- 화살표 -->
+   209|                    <div class="text-knit-green text-xl sm:text-3xl font-bold rotate-90 sm:rotate-0 py-1 sm:py-0">➔</div>
+   210|
+   211|                    <!-- 3. 나무 옷 입히기 -->
+   212|                    <div class="bg-knit-light rounded-2xl p-3 w-full sm:w-1/3 flex flex-row sm:flex-col items-center justify-start sm:justify-center border border-gray-200 shadow-sm">
+   213|                        <div class="w-14 h-14 sm:w-20 sm:h-20 sm:mb-2 flex-shrink-0">
+   214|                            <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+   215|                                <path d="M40 100 L45 10 Q50 0 60 10 L65 100 Z" fill="#8B5A2B"/>
+   216|                                <circle cx="50" cy="20" r="25" fill="#6E9063"/>
+   217|                                <rect x="42" y="45" width="20" height="40" rx="3" fill="#DE7456"/>
+   218|                                <rect x="42" y="55" width="20" height="10" fill="#F5B85A"/>
+   219|                                <rect x="42" y="75" width="20" height="10" fill="#F5B85A"/>
+   220|                                <path d="M42 45 Q 52 50 62 45" stroke="#fff" stroke-width="2" fill="none"/>
+   221|                            </svg>
+   222|                        </div>
+   223|                        <div class="ml-4 sm:ml-0 flex flex-col items-start sm:items-center">
+   224|                            <h4 class="font-title text-base sm:text-lg text-knit-orange text-center">3. 나무옷 입히기</h4>
+   225|                            <p class="text-[11px] sm:text-xs text-left sm:text-center text-gray-600 mt-1 leading-snug">완성된 옷을 겨울 나무에<br class="hidden sm:block"> 따뜻하게 입혀줘요</p>
+   226|                        </div>
+   227|                    </div>
+   228|                </div>
+   229|            </div>
+   230|
+   231|            <!-- 로드맵 영역 -->
+   232|            <div class="flex-grow relative mb-6">
+   233|                <h3 class="font-title text-lg sm:text-2xl text-center mb-2 text-knit-brown">🗺️ 우리의 뜨개 여정 (로드맵)</h3>
+   234|                <!-- 높이를 충분히 주어 겹침 방지 -->
+   235|                <div class="relative w-full min-h-[220px] sm:min-h-[200px] bg-[#F4EFDF] rounded-2xl sm:rounded-3xl border-2 border-white shadow-inner overflow-visible sm:overflow-hidden">
+   236|                    
+   237|                    <!-- 구불구불한 선 -->
+   238|                    <svg class="absolute inset-0 w-full h-full" viewBox="0 0 800 250" preserveAspectRatio="none">
+   239|                        <path class="roadmap-path" d="M 50,40 C 200,10 300,110 400,110 C 500,110 600,10 750,50 C 850,80 800,200 650,200 C 450,200 350,130 200,180 C 100,210 50,150 50,150" fill="none" stroke="#DE7456" stroke-width="6" stroke-linecap="round"/>
+   240|                    </svg>
+   241|
+   242|                    <!-- 각 단계별 핀 (텍스트 박스 위치를 위/아래로 번갈아 배치하여 겹침 방지) -->
+   243|                    <!-- 1. 오리엔테이션 (아래로) -->
+   244|                    <div class="roadmap-pin absolute" style="top: 15%; left: 8%;">
+   245|                        <div class="bg-knit-orange text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">1</div>
+   246|                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-orange-100 z-30">오리엔테이션</div>
+   247|                    </div>
+   248|                    <!-- 2. 1차 정기모임 (위로) -->
+   249|                    <div class="roadmap-pin absolute" style="top: 25%; left: 28%;">
+   250|                        <div class="roadmap-tooltip bottom-full mb-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-green-100 z-30">1차 정기모임</div>
+   251|                        <div class="bg-knit-green text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">2</div>
+   252|                    </div>
+   253|                    <!-- 3. 비정기모임 (아래로) -->
+   254|                    <div class="roadmap-pin absolute" style="top: 35%; left: 48%;">
+   255|                        <div class="bg-knit-yellow text-knit-brown rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">3</div>
+   256|                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-yellow-100 z-30">비정기모임(함뜨)</div>
+   257|                    </div>
+   258|                    <!-- 4. (...) (위로) -->
+   259|                    <div class="roadmap-pin absolute" style="top: 20%; left: 70%;">
+   260|                        <div class="roadmap-tooltip bottom-full mb-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-gray-100 z-30">• • •</div>
+   261|                        <div class="bg-gray-400 text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">4</div>
+   262|                    </div>
+   263|                    <!-- 5. 모티브 잇기 (아래로) -->
+   264|                    <div class="roadmap-pin absolute" style="top: 60%; left: 82%;">
+   265|                        <div class="bg-knit-orange text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">5</div>
+   266|                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-orange-100 z-30">모티브 잇기</div>
+   267|                    </div>
+   268|                    <!-- 6. 나무옷 입히기 (위로) -->
+   269|                    <div class="roadmap-pin absolute" style="top: 75%; left: 55%;">
+   270|                        <div class="roadmap-tooltip bottom-full mb-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-green-100 z-30">나무옷 입히기</div>
+   271|                        <div class="bg-knit-green text-white rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">6</div>
+   272|                    </div>
+   273|                    <!-- 7. 마무리 (아래로) -->
+   274|                    <div class="roadmap-pin absolute" style="top: 65%; left: 30%;">
+   275|                        <div class="bg-knit-yellow text-knit-brown rounded-full w-5 h-5 sm:w-6 sm:h-6 flex items-center justify-center font-bold shadow-md relative text-xs sm:text-base z-20 mx-auto">7</div>
+   276|                        <div class="roadmap-tooltip top-full mt-1 bg-white px-2 py-1 rounded text-[10px] sm:text-xs font-bold shadow border border-yellow-100 z-30">프로젝트 마무리</div>
+   277|                    </div>
+   278|
+   279|                    <!-- 장식용 고양이 -->
+   280|                    <div class="absolute" style="top: 55%; left: 5%; width: 40px; height: 40px; z-10 pointer-events-none">
+   281|                        <svg viewBox="0 0 100 100">
+   282|                            <path d="M 20 80 Q 20 50 50 50 Q 80 50 80 80 Z" fill="#4A3E3D"/>
+   283|                            <path d="M 30 55 L 25 40 L 40 50 Z" fill="#4A3E3D"/>
+   284|                            <path d="M 70 55 L 75 40 L 60 50 Z" fill="#4A3E3D"/>
+   285|                            <path d="M 80 80 Q 95 80 90 60" stroke="#4A3E3D" stroke-width="6" fill="none" stroke-linecap="round"/>
+   286|                        </svg>
+   287|                    </div>
+   288|                </div>
+   289|            </div>
+   290|
+   291|            <!-- 상세 참여 안내 영역 -->
+   292|            <div class="mb-5 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 w-full">
+   293|                
+   294|                <!-- 1. 모티브 뜨개 가이드 (가로 전체 차지) -->
+   295|                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border-2 border-knit-yellow shadow-sm sm:col-span-2 flex flex-col sm:flex-row gap-3 sm:gap-5">
+   296|                    <!-- 설명 및 버튼 (PC에서 좌측) -->
+   297|                    <div class="flex-1 flex flex-col justify-between order-2 sm:order-1">
+   298|                        <div>
+   299|                            <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">🪡 모티브?</h4>
+   300|                            <ul class="text-xs sm:text-sm space-y-1.5 mb-3">
+   301|                                <li>작은 조각(모티브)을 여러 개 떠서 연결하여 블랭킷, 가방, 옷 등 큰 작품을 만드는 코바늘 뜨개질 기법입니다.</li>
+   302|                                <li><span class="font-bold text-knit-brown">기본 권장 규격:</span> <span class="text-gray-400 border-b border-gray-300 px-1">10cm X 10cm</span></li>
+   303|                            </ul>
+   304|                        </div>
+   305|                        <a href="https://www.youtube.com/watch?v=5dZOTuhfRPw" target="_blank" class="inline-flex items-center justify-center gap-1.5 w-full bg-[#DE7456] hover:bg-[#c46146] text-white text-[11px] sm:text-xs font-bold py-2 rounded-xl transition shadow-sm mt-auto">
+   306|                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+   307|                            초보자용 모티브 뜨기 (영상)
+   308|                        </a>
+   309|                    </div>
+   310|                    <!-- 사진 영역 (사진 4장 나란히, PC에서 우측) -->
+   311|                    <div class="flex-1 grid grid-cols-4 gap-1.5 sm:gap-2 h-28 sm:h-auto min-h-[110px] order-1 sm:order-2">
+   312|                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://mblogthumb-phinf.pstatic.net/MjAyNjAxMjFfMTEy/MDAxNzY4OTU1NDMyMTMy.ab9CL31XmBmCCsUxWMLjJnsI3qD5QH4hM3d4olKv5DYg.K26AxhubbTj0lojW9uEqkKE171yBV5zega5lKb0UmzEg.JPEG/%EC%BD%94%EB%B0%94%EB%8A%98%EB%9C%A8%EA%B8%B0%EB%8F%84%EC%95%88.jpg?type=w800')">
+   313|                            <img src="https://mblogthumb-phinf.pstatic.net/MjAyNjAxMjFfMTEy/MDAxNzY4OTU1NDMyMTMy.ab9CL31XmBmCCsUxWMLjJnsI3qD5QH4hM3d4olKv5DYg.K26AxhubbTj0lojW9uEqkKE171yBV5zega5lKb0UmzEg.JPEG/%EC%BD%94%EB%B0%94%EB%8A%98%EB%9C%A8%EA%B8%B0%EB%8F%84%EC%95%88.jpg?type=w800" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+   314|                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
+   315|                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+   316|                            </div>
+   317|                        </div>
+   318|                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://mblogthumb-phinf.pstatic.net/MjAxODA3MTZfMjA3/MDAxNTMxNzUyOTE4OTIw.D39vAFf0HMgX5qzro-JlntUVK0c7KTYsd4AKjNpY-3Ig.sMuSSMK8fLlKh__8Sw2QdmXfDUhFIUljZqJLmqqOyD0g.JPEG.ppeudamade/c6dfc18434e3546d1bbcc7a5ce7a7768.jpg?type=w800')">
+   319|                            <img src="https://mblogthumb-phinf.pstatic.net/MjAxODA3MTZfMjA3/MDAxNTMxNzUyOTE4OTIw.D39vAFf0HMgX5qzro-JlntUVK0c7KTYsd4AKjNpY-3Ig.sMuSSMK8fLlKh__8Sw2QdmXfDUhFIUljZqJLmqqOyD0g.JPEG.ppeudamade/c6dfc18434e3546d1bbcc7a5ce7a7768.jpg?type=w800" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+   320|                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
+   321|                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+   322|                            </div>
+   323|                        </div>
+   324|                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://i.pinimg.com/236x/8f/79/8d/8f798dd893217353948c671d6c955eaf.jpg')">
+   325|                            <img src="https://i.pinimg.com/236x/8f/79/8d/8f798dd893217353948c671d6c955eaf.jpg" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+   326|                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
+   327|                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+   328|                            </div>
+   329|                        </div>
+   330|                        <div class="w-full h-full rounded-lg overflow-hidden border border-gray-200 shadow-inner bg-gray-50 relative group cursor-pointer" onclick="openImageModal('https://i.pinimg.com/564x/d0/69/e3/d069e3b01782ca29ad3aa6d1c4e4942f.jpg')">
+   331|                            <img src="https://i.pinimg.com/564x/d0/69/e3/d069e3b01782ca29ad3aa6d1c4e4942f.jpg" alt="" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110">
+   332|                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all flex items-center justify-center">
+   333|                                <svg class="w-5 h-5 text-white opacity-0 group-hover:opacity-100 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"></path></svg>
+   334|                            </div>
+   335|                        </div>
+   336|                    </div>
+   337|                </div>
+   338|
+   339|                <!-- 2. 준비물 및 수령 (가로 전체 차지) -->
+   340|                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm sm:col-span-2">
+   341|                    <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">🎁 준비물 및 수령</h4>
+   342|                    <div class="flex flex-col sm:flex-row sm:items-center sm:divide-x sm:divide-gray-200 gap-2 sm:gap-0">
+   343|                        <div class="sm:w-1/2 sm:pr-4">
+   344|                            <span class="font-bold text-knit-brown text-xs sm:text-sm block mb-0.5">제공 준비물:</span>
+   345|                            <span class="text-xs sm:text-sm text-gray-700">코바늘, 뜨개실, 돗바늘, 단수링</span>
+   346|                        </div>
+   347|                        <div class="sm:w-1/2 sm:pl-4 pt-2 sm:pt-0 border-t sm:border-t-0 border-gray-100">
+   348|                            <span class="font-bold text-knit-brown text-xs sm:text-sm block mb-0.5">수령 방법:</span>
+   349|                            <span class="text-xs sm:text-sm text-gray-700">뜨개모임 장소 또는 <span class="text-[11px] sm:text-[12px] font-semibold text-gray-600 bg-gray-50 px-1 rounded inline-block border border-gray-100 mt-0.5 sm:mt-0">고리울청소년센터 '꾸마' 방문</span></span>
+   350|                        </div>
+   351|                    </div>
+   352|                </div>
+   353|
+   354|                <!-- 3. 완성작 제출 (좌측) -->
+   355|                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm">
+   356|                    <h4 class="font-title text-knit-green text-base sm:text-lg mb-2 flex items-center gap-1">📮 제작물 제출방법</h4>
+   357|                    <ul class="text-xs sm:text-sm space-y-2">
+   358|                        <li><span class="font-bold text-knit-brown">대면 제출:</span> 뜨개모임 장소 또는<br> 고리울청소년센터 '꾸마' 방문</li>
+   359|                        <li class="pt-1.5 border-t border-gray-100"><span class="font-bold text-knit-brown">비대면 제출:</span> 택배 발송<br>
+   360|                        <span class="text-[10px] sm:text-[11px] text-gray-500 bg-gray-50 p-1.5 rounded block mt-1 border border-gray-100 leading-tight">📍 경기 부천시 오정구 고강로132번길 28,<br>고리울청소년센터 꾸마</span></li>
+   361|                    </ul>
+   362|                </div>
+   363|
+   364|                <!-- 4. 비대면 참여 가이드 (우측 - 새로 추가됨!) -->
+   365|                <div class="bg-[#FDFBF7] rounded-xl sm:rounded-2xl p-3 sm:p-4 border-2 border-knit-green shadow-sm flex items-center gap-3 group relative overflow-hidden">
+   366|                    <a href="https://heyzine.com/flip-book/3ec90c1ed7.html" target="_blank" class="flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-lg p-1 border border-gray-200 hover:scale-105 transition-transform duration-300 shadow-sm z-10" title="안내 책자 바로가기">
+   367|                        <!-- heyzine 주소로 향하는 QR 코드 이미지 API 호출 -->
+   368|                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://heyzine.com/flip-book/3ec90c1ed7.html&color=4A3E3D" alt="비대면 참여 안내 QR코드" class="w-full h-full object-contain">
+   369|                    </a>
+   370|                    <div class="z-10">
+   371|                        <h4 class="font-title text-knit-green text-base sm:text-lg mb-1 flex items-center gap-1">📖 비대면 참여 가이드</h4>
+   372|                        <p class="text-[11px] sm:text-xs text-gray-700 leading-snug">
+   373|                            모임 참석이 어려우신가요?<br>
+   374|                            <a href="https://heyzine.com/flip-book/3ec90c1ed7.html" target="_blank" class="font-bold text-knit-orange hover:underline decoration-2 underline-offset-2 cursor-pointer">QR 스캔 또는 클릭</a>하여<br>
+   375|                            참여 방법을 확인해 보세요!
+   376|                        </p>
+   377|                    </div>
+   378|                </div>
+   379|
+   380|                <!-- 5. 문의 (가로 전체 차지 - 맨 밑으로 이동) -->
+   381|                <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm sm:col-span-2 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-4">
+   382|                    <h4 class="font-title text-knit-orange text-base sm:text-lg flex items-center gap-1 flex-shrink-0">💬 Contact</h4>
+   383|                    <p class="text-xs sm:text-sm text-gray-700 leading-relaxed text-left sm:text-right w-full">
+   384|                        궁금한 점이 있으신가요? <span class="font-bold text-knit-orange">카카오톡 '털뭉치클럽 한그루한벌'</span> 단톡방에서 <span class="bg-yellow-100 text-yellow-800 px-1 rounded font-bold border border-yellow-200">운영진</span>을 태그하여 편하게 질문해 주세요!
+   385|                    </p>
+   386|                </div>
+   387|            </div>
+   388|
+   389|            <!-- 하단 안내 정보 영역 -->
+   390|            <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-gray-200 shadow-sm mb-2">
+   391|                <div class="grid grid-cols-2 gap-2 sm:gap-3 text-sm">
+   392|                    <div>
+   393|                        <p class="font-title text-knit-green text-base sm:text-lg">🗓️ 진행 일정</p>
+   394|                        <p class="mt-1 font-bold text-xs sm:text-sm">2026년 5월 ~ 12월 초</p>
+   395|                        <p class="text-[10px] sm:text-xs text-gray-500 mt-0.5">(일정 조율 후 모임 진행)</p>
+   396|                    </div>
+   397|                    <div>
+   398|                        <p class="font-title text-knit-green text-base sm:text-lg">📍 모임 장소</p>
+   399|                        <p class="mt-1 font-bold text-xs sm:text-sm">청소년문화센터 및 오프라인</p>
+   400|                    </div>
+   401|                    <div class="col-span-2 mt-1 pt-2 border-t border-gray-100">
+   402|                        <p class="font-title text-knit-green text-base sm:text-lg">🙋 모집 대상</p>
+   403|                        <p class="mt-1 font-semibold text-xs sm:text-sm">뜨개와 손작업에 관심 있는 성인 및 청년 누구나!</p>
+   404|                        <p class="text-[10px] sm:text-xs font-bold text-knit-orange mt-1">※ 정식 소모임 가입 없이 모티브 기부(일회성 참여)도 대환영합니다!</p>
+   405|                    </div>
+   406|                </div>
+   407|            </div>
+   408|
+   409|            <!-- 최하단 푸터 영역 -->
+   410|            <footer class="mt-auto pt-2 pb-2 relative flex items-center justify-center w-full">
+   411|                <p class="text-[11px] sm:text-sm font-bold text-knit-brown flex items-center justify-center gap-1 sm:gap-2">
+   412|                    🧶 함께 뜨는 즐거움, 
+   413|                    <span class="font-title text-base sm:text-xl text-knit-orange">털뭉치클럽</span> 과 함께해요! 🌲
+   414|                </p>
+   415|                <button onclick="sharePoster()" class="absolute right-0 bg-knit-yellow text-knit-brown p-1.5 sm:px-3 sm:py-1.5 rounded-full shadow hover:bg-yellow-400 transition flex items-center gap-1 text-[10px] sm:text-xs font-bold" title="공유하기">
+   416|                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-3.5 h-3.5 sm:w-4 sm:h-4">
+   417|                        <path stroke-linecap="round" stroke-linejoin="round" d="M7.217 10.907a2.25 2.25 0 1 0 0 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186 9.566-5.314m-9.566 7.5 9.566 5.314m0 0a2.25 2.25 0 1 0 3.935 2.186 2.25 2.25 0 0 0-3.935-2.186Zm0-12.814a2.25 2.25 0 1 0 3.933-2.185 2.25 2.25 0 0 0-3.933 2.185Z" />
+   418|                    </svg>
+   419|                    <span class="hidden sm:inline">공유</span>
+   420|                </button>
+   421|            </footer>
+   422|
+   423|        </div>
+   424|    </div>
+   425|
+   426|    <!-- 링크 복사 알림 토스트 -->
+   427|    <div id="toast" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-knit-brown text-white px-5 py-2 rounded-full opacity-0 transition-opacity duration-300 pointer-events-none z-50 text-sm font-bold shadow-lg">
+   428|        웹페이지 주소가 복사되었습니다! 🧶
+   429|    </div>
+   430|
+   431|    <!-- 이미지 확대 보기 모달 -->
+   432|    <div id="imageModal" class="fixed inset-0 z-[100] hidden bg-black bg-opacity-80 flex items-center justify-center p-4 transition-opacity duration-300 opacity-0" onclick="closeImageModal()">
+   433|        <button class="absolute top-4 right-4 sm:top-6 sm:right-6 text-white hover:text-gray-300 p-2 focus:outline-none" onclick="closeImageModal()">
+   434|            <svg class="w-8 h-8 sm:w-10 sm:h-10 drop-shadow-md" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+   435|        </button>
+   436|        <img id="modalImg" src="" class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl transform scale-95 transition-transform duration-300" alt="원본 이미지" onclick="event.stopPropagation()">
+   437|    </div>
+   438|
+   439|    <script>
+   440|        function showToast() {
+   441|            const toast = document.getElementById('toast');
+   442|            toast.classList.remove('opacity-0');
+   443|            setTimeout(() => {
+   444|                toast.classList.add('opacity-0');
+   445|            }, 2000);
+   446|        }
+   447|
+   448|        function sharePoster() {
+   449|            if (navigator.share) {
+   450|                navigator.share({
+   451|                    title: '털뭉치클럽 - 한 그루 한 벌',
+   452|                    text: '함께 뜨는 나무옷 만들기 프로젝트에 함께해요!',
+   453|                    url: window.location.href,
+   454|                }).catch((error) => console.log('공유 취소됨', error));
+   455|            } else {
+   456|                const dummy = document.createElement('input');
+   457|                document.body.appendChild(dummy);
+   458|                dummy.value = window.location.href;
+   459|                dummy.select();
+   460|                document.execCommand('copy');
+   461|                document.body.removeChild(dummy);
+   462|                showToast();
+   463|            }
+   464|        }
+   465|
+   466|        // 모달 열기 함수
+   467|        function openImageModal(src) {
+   468|            const modal = document.getElementById('imageModal');
+   469|            const modalImg = document.getElementById('modalImg');
+   470|            modalImg.src = src;
+   471|            
+   472|            modal.classList.remove('hidden');
+   473|            setTimeout(() => {
+   474|                modal.classList.remove('opacity-0');
+   475|                modalImg.classList.remove('scale-95');
+   476|                modalImg.classList.add('scale-100');
+   477|            }, 10);
+   478|        }
+   479|
+   480|        // 모달 닫기 함수
+   481|        function closeImageModal() {
+   482|            const modal = document.getElementById('imageModal');
+   483|            const modalImg = document.getElementById('modalImg');
+   484|            
+   485|            modal.classList.add('opacity-0');
+   486|            modalImg.classList.remove('scale-100');
+   487|            modalImg.classList.add('scale-95');
+   488|            
+   489|            setTimeout(() => {
+   490|                modal.classList.add('hidden');
+   491|                modalImg.src = '';
+   492|            }, 300);
+   493|        }
+   494|    </script>
+   495|</body>
+   496|</html>
+   497|
+   498|
+   499|```
+   500|
